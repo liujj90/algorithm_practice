@@ -42,8 +42,8 @@ class Percolation(object):
 		self.make_vacant(np.random.randint(0,self.n-1), np.random.randint(0,self.n-1))
 	def percolate(self):
 		return self.union_find.connected(0,self.n**2-1) #is top and bottom connected?
-
-grid1 = Percolation(5)
-for i in range(6):
+# usage
+grid1 = Percolation(5) # initialise a 5x5 grid
+for i in range(6): # randomly open 6 cells 
 	grid1.randomised_vacancy()
-	print(grid1.grid, grid1.percolate())
+	print(grid1.grid, grid1.percolate()) # what the grid looks like, whether it percolates
