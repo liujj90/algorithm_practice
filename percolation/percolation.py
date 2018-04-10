@@ -5,7 +5,7 @@ import numpy as np
 class Percolation(object):
 	def __init__(self,n):
 		self.n = n
-		self.union_find = WeightedQuickUnionUF(self.n**2)
+		self.union_find = WeightedQuickUnionUF(self.n**2 + 2*self.n) # +2 additional rows
 		self.grid = self.make_grid()
 		
 		self.num_open =0
@@ -13,17 +13,17 @@ class Percolation(object):
 	# if vacant: 0, not vacant = 1
 	def make_grid(self):
 		# initialise with all "not vacant"
-	    grid = np.ones((self.n,self.n))
+	    grid = np.ones((self.n+2,self.n))
 	    # make top and bottom vacant
-	    grid[0,:], grid[self.n-1,:] = 0,0
+	    grid[0,:], grid[self.n+1,:] = 0,0
 	    for col in range(self.n):
 	    	self.connect(0,0,0,col) #connect first row
-	    for col in range(self.n):
-	    	self.connect(self.n-1, 0, self.n-1, col) # connect last row
+	    for col in range(self.n-1):
+	    	self.connect(self.n+1, 0, self.n+1, col) # connect last row
 	    return grid
 
 	def unrolled_coordinates(self, i,j):
-		return i*self.n + j # need to unroll 2d array into 1d so we can work with single indices for weightedquickunionfind
+		return (i)*self.n + j # need to unroll 2d array into 1d so we can work with single indices for weightedquickunionfind
 
 	def connect(self, i1,j1,i2,j2):
 		self.union_find.union(self.unrolled_coordinates(i1,j1), self.unrolled_coordinates(i2,j2))
@@ -39,11 +39,13 @@ class Percolation(object):
 					self.connect(i,j, adjacentx,adjacenty)
 
 	def randomised_vacancy(self):
-		self.make_vacant(np.random.randint(0,self.n-1), np.random.randint(0,self.n-1))
+		self.make_vacant(np.random.randint(1,self.n+1), np.random.randint(0,self.n-1))
 	def percolate(self):
-		return self.union_find.connected(0,self.n**2-1) #is top and bottom connected?
-# usage
-grid1 = Percolation(5) # initialise a 5x5 grid
-for i in range(6): # randomly open 6 cells 
+		return self.union_find.connected(0,(self.n+1)*self.n) #is top and bottom connected?
+
+
+#test
+grid1 = Percolation(5)
+for i in range(20):
 	grid1.randomised_vacancy()
-	print(grid1.grid, grid1.percolate()) # what the grid looks like, whether it percolates
+	print(grid1.grid, grid1.num_open, grid1.percolate())
