@@ -17,3 +17,11 @@ The current settins worked on my ubuntu (16.04 LTS) virtual box.
 This is a naive implementation (m*n time) of Dijkstra's algorithm for finding the shortest path in a weighted, directed graph.\
 
 Default starting node is 1, and default distance is 100000 (scale this to inf for larger graphs).
+
+### Heap implementation for the Median Maintenance
+
+This one was a lot of fun to make: An efficient manner (O(nlgn)) of computing rolling medians from an array using the heap datastructure. 
+
+Essentially by creating two heaps: a min heap containing the n/2 largest values(H_high) and a max heap containing the n/2(cieling) smallest values. Each time the two half lists get imbalanced, we extract the value from the larger half and inserting to the bottom of the smaller half, maintaining heap invarient for both heaps each time. 
+
+Performance: 0.107s vs 9.32s for the naive implementation in python3. 
