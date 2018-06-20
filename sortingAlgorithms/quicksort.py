@@ -1,9 +1,4 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
+# Partition types: start
 def partition_start(A,l, end):
     pivot = A[l]
     i = l+1
@@ -15,10 +10,7 @@ def partition_start(A,l, end):
     A[i-1], A[l] = A[l], A[i-1]
     return i-1
 
-
-# In[2]:
-
-
+# Partition type: end
 def partition_end(A,l, end):
     A[l], A[end-1] = A[end-1], A[l]
     pivot = A[l]
@@ -33,9 +25,7 @@ def partition_end(A,l, end):
     return i-1
 
 
-# In[46]:
-
-
+# Partition type, taking the median of 3 values
 import math
 
 def get_median(A):
@@ -55,9 +45,6 @@ def get_median(A):
         return n-1
 
 
-# In[45]:
-
-
 def partition(A,p, l, end):
     if p != l:
         A[l], A[p] = A[p], A[l]
@@ -74,9 +61,7 @@ def partition(A,p, l, end):
     return i-1
 
 
-# In[48]:
-
-
+# quicksort median
 def qsm(A):
     global count
     n = len(A)
@@ -89,11 +74,7 @@ def qsm(A):
     qsm(A[p_ind+1:])
     
     
-
-
-# In[72]:
-
-
+# quicksort with either start or end partitions
 count = 0
 def qs(A):
     global count
@@ -105,9 +86,6 @@ def qs(A):
         ind = partition_end(A,0, len(A))
         qs(A[:ind])
         qs(A[ind +1:])
-
-
-# In[63]:
 
 
 '''
